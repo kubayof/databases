@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:c="http://www.springframework.org/schema/c"
+       xmlns:p="http://www.springframework.org/schema/p" xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/mvc https://www.springframework.org/schema/mvc/spring-mvc.xsd http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
+
+    <mvc:annotation-driven/>
+    <context:component-scan base-package="com.naofi.controllers"/>
+    <mvc:resources mapping="/css/**" location="/css/"/>
+    <mvc:resources mapping="/js/**" location="/js/"/>
+
+    <bean name="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver"
+          p:viewClass="org.springframework.web.servlet.view.JstlView"
+          c:prefix="/jsp/"
+          c:suffix=".jsp"/>
+
+    <bean name="postgreDS" class="org.springframework.jdbc.datasource.DriverManagerDataSource"
+          scope="prototype"
+          p:url="jdbc:postgresql://localhost:5432/db_labs"
+          p:username="test"
+          p:password="testpass"
+          p:driverClassName="org.postgresql.Driver"/>
+
+    <bean name="abstractDao" class="com.naofi.model.dao.AbstractDAO" abstract="true"
+          c:ds-ref="postgreDS"/>
+
+    <bean name="managerDao" class="com.naofi.model.dao.jdbc.ManagerJdbcDAO"
+          parent="abstractDao"/>
+
+    <bean name="programmerDao" class="com.naofi.model.dao.jdbc.ProgrammerJdbcDAO"
+          parent="abstractDao"/>
+
+    <bean name="projectDao" class="com.naofi.model.dao.jdbc.ProjectJdbcDAO"
+          parent="abstractDao"/>
+
+    <bean name="technologyDao" class="com.naofi.model.dao.jdbc.TechnologyJdbcDAO"
+          parent="abstractDao"/>
+
+    <bean name="programmerTechnologyDao" class="com.naofi.model.dao.jdbc.ProgrammerTechnologyJdbcDAO"
+          parent="abstractDao"/>
+
+    <bean name="projectTechnologyDao" class="com.naofi.model.dao.jdbc.ProjectTechnologyJdbcDAO"
+          parent="abstractDao"/>
+
+    <bean name="gen" class="com.naofi.util.IdGenerator" scope="request"/>
+</beans>
