@@ -3,7 +3,7 @@
         <h5 class="mb-0">
             <button class="btn btn-link" aria-expanded="true"
                     aria-controls="collapseOne">
-                Programmers
+                Technologies
             </button>
         </h5>
     </div>

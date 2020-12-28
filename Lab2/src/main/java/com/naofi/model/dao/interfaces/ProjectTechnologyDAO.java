@@ -9,7 +9,7 @@ public interface ProjectTechnologyDAO {
     List<ProjectTechnology> getByTechnologyId(int technologyId);
     ProjectTechnology getById(int projectId, int technologyId);
 
-
     int save(ProjectTechnology entity);
     int delete(ProjectTechnology entity);
+    void populate(int count);
 }

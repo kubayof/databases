@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:c="http://www.springframework.org/schema/c"
+       xmlns:p="http://www.springframework.org/schema/p" xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/mvc https://www.springframework.org/schema/mvc/spring-mvc.xsd http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/aop https://www.springframework.org/schema/aop/spring-aop.xsd">
+
+    <import resource="db.xml"/>
+
+    <mvc:annotation-driven/>
+    <context:component-scan base-package="com.naofi.controllers"/>
+    <mvc:resources mapping="/css/**" location="/css/"/>
+    <mvc:resources mapping="/js/**" location="/js/"/>
+
+    <bean name="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver"
+          p:viewClass="org.springframework.web.servlet.view.JstlView"
+          c:prefix="/jsp/"
+          c:suffix=".jsp"/>
+
+    <bean name="gen" class="com.naofi.util.IdGenerator" scope="request"/>
+
+    <!-- Use aop to begin and stop transaction for controller methods -->
+<!--    <bean id="transactionalBean" class="com.naofi.controllers.aop.TransactionAspectBean"/>-->
+<!--    <aop:config>-->
+<!--        <aop:aspect id="transactionAspect" ref="transactionalBean">-->
+<!--            <aop:pointcut id="transactional" expression="execution(* com.naofi.controllers.*Controller.*(..))"/>-->
+<!--            <aop:before method="beginTransaction" pointcut-ref="transactional"/>-->
+<!--            <aop:after-returning method="commit" pointcut-ref="transactional"/>-->
+<!--            <aop:after-throwing method="rollback" pointcut-ref="transactional"/>-->
+<!--        </aop:aspect>-->
+<!--    </aop:config>-->
+</beans>

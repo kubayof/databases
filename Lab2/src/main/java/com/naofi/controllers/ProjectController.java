@@ -2,12 +2,13 @@ package com.naofi.controllers;
 
 import com.naofi.model.dao.interfaces.ProjectDAO;
 import com.naofi.model.entity.Project;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-
-@RestController
+@Controller
 @RequestMapping("projects")
 public class ProjectController {
     private final ProjectDAO dao;
@@ -17,26 +18,42 @@ public class ProjectController {
     }
 
     @GetMapping("/id")
+    @ResponseBody
     public Project getById(@RequestParam Integer id) {
-        return dao.getById(id);
+        Project project = dao.getById(id);
+        if (project == null) {
+            throw new NullPointerException();
+        }
+        return project;
     }
 
     @GetMapping("/name")
-    public List<Project> getByName(@RequestParam String name) {
-        return dao.getByName(name);
+    public String getByName(@RequestParam String name, Model model) {
+        model.addAttribute("items", dao.getByName(name));
+
+        return "list_info";
     }
 
     @GetMapping("/manager_id")
+    @ResponseBody
     public Project getByManagerId(@RequestParam("manager_id") Integer managerId) {
-        return dao.getByManagerId(managerId);
+        Project project = dao.getByManagerId(managerId);
+        if (project == null) {
+            throw new NullPointerException();
+        }
+        return project;
     }
 
     @GetMapping("/technology_id")
-    public List<Project> getByTechnologyId(@RequestParam("technology_id") Integer technologyId) {
-        return dao.getByTechnologyId(technologyId);
+    @ResponseBody
+    public String getByTechnologyId(@RequestParam("technology_id") Integer technologyId, Model model) {
+        model.addAttribute("items", dao.getByTechnologyId(technologyId));
+
+        return "list_info";
     }
 
     @PostMapping("/new")
+    @ResponseBody
     public String createNew(Project project) {
         if (dao.save(project) > 0) {
             return "Inserted successfully";
@@ -46,6 +63,7 @@ public class ProjectController {
     }
 
     @PostMapping("/update")
+    @ResponseBody
     public String update(Project project) {
         if (dao.update(project) > 0) {
             return "Updated successfully";
@@ -54,7 +72,8 @@ public class ProjectController {
         }
     }
 
-    @GetMapping("/delete")
+    @PostMapping("/delete")
+    @ResponseBody
     public String delete(@RequestParam("id") Integer id) {
         if (dao.deleteById(id) > 0) {
             return "Successfully deleted";

@@ -11,4 +11,5 @@ public interface ProgrammerTechnologyDAO {
 
     int save(ProgrammerTechnology entity);
     int delete(ProgrammerTechnology entity);
+    void populate(int count);
 }

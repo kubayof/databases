@@ -3,6 +3,7 @@ package com.naofi.model.dao.jdbc;
 import com.naofi.model.dao.AbstractDAO;
 import com.naofi.model.dao.interfaces.ManagerDAO;
 import com.naofi.model.entity.Manager;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 
@@ -30,9 +31,13 @@ public class ManagerJdbcDAO extends AbstractDAO implements ManagerDAO {
 
     @Override
     public Manager getById(int id) {
-        return template.queryForObject("select * from managers where id = :id",
-                new MapSqlParameterSource().addValue("id", id),
-                new BeanPropertyRowMapper<>(Manager.class));
+        try {
+            return template.queryForObject("select * from managers where id = :id",
+                    new MapSqlParameterSource().addValue("id", id),
+                    new BeanPropertyRowMapper<>(Manager.class));
+        } catch (EmptyResultDataAccessException e) {
+            return null;
+        }
     }
 
     @Override
@@ -51,18 +56,26 @@ public class ManagerJdbcDAO extends AbstractDAO implements ManagerDAO {
 
     @Override
     public Manager getByProjectId(int projectId) {
-        return template.queryForObject("select * from managers where id = " +
-                        "(select manager from projects where id = :project_id)",
-                new MapSqlParameterSource().addValue("project_id", projectId),
-                new BeanPropertyRowMapper<>(Manager.class));
+        try {
+            return template.queryForObject("select * from managers where id = " +
+                            "(select manager from projects where id = :project_id)",
+                    new MapSqlParameterSource().addValue("project_id", projectId),
+                    new BeanPropertyRowMapper<>(Manager.class));
+        } catch (EmptyResultDataAccessException e) {
+            return null;
+        }
     }
 
     @Override
     public Manager getByProgrammerId(int programmerId) {
-        return template.queryForObject("select * from managers where id = " +
-                        "(select manager from programmers where id = :programmer_id)",
-                new MapSqlParameterSource().addValue("programmer_id", programmerId),
-                new BeanPropertyRowMapper<>(Manager.class));
+        try {
+            return template.queryForObject("select * from managers where id = " +
+                            "(select manager from programmers where id = :programmer_id)",
+                    new MapSqlParameterSource().addValue("programmer_id", programmerId),
+                    new BeanPropertyRowMapper<>(Manager.class));
+        } catch (EmptyResultDataAccessException e) {
+            return null;
+        }
     }
 
     @Override
@@ -73,5 +86,13 @@ public class ManagerJdbcDAO extends AbstractDAO implements ManagerDAO {
                         .addValue("first_name", manager.getFirstName())
                         .addValue("last_name", manager.getLastName())
                         .addValue("manager_id", manager.getId()));
+    }
+
+    @Override
+    public void populate(int count) {
+        template.update("insert into managers (first_name, last_name) " +
+                        "(select substring(md5(random()::text) from 1 for (random() * 5 + 5)::int), " +
+                        "substring(md5(random()::text) from 1 for (random() * 5 + 5)::int) from generate_series(1, :count) g)",
+                new MapSqlParameterSource().addValue("count", count));
     }
 }

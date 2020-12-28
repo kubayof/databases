@@ -9,7 +9,7 @@
     </div>
     <div id="${gen.getId("collapse")}" class="collapse" data-parent="#${gen.getId("accordion")}">
         <div class="card-body">
-            <form action="/projects_technologies/delete" method="DELETE">
+            <form action="/projects_technologies/delete" method="POST">
                 <div class="form-group">
                     <label for="${gen.newId("project_id")}">Project Id</label>
                     <input type="number" class="form-control" id="${gen.getId("project_id")}" name="projectId" value="1" min="1">

@@ -14,7 +14,7 @@
                     <label for="${gen.newId("last_name")}">Last name</label>
                     <input type="text" class="form-control" id="${gen.getId("last_name")}" name="last_name" value="Name">
                 </div>
-                <button type="submit" class="btn btn-primary">Get by last name</button>
+                <button type="submit" class="btn btn-primary">Get</button>
             </form>
         </div>
     </div>

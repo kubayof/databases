@@ -32,7 +32,7 @@ CREATE TABLE projects_technologies
     project_id    INT,
     technology_id INT,
     primary key (project_id, technology_id),
-    foreign key (project_id) references projects (id),
+    foreign key (project_id) references projects (id) ON DELETE CASCADE,
     foreign key (technology_id) references technologies (id) ON DELETE CASCADE
 );
 

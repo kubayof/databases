@@ -3,6 +3,7 @@ package com.naofi.model.dao.jdbc;
 import com.naofi.model.dao.AbstractDAO;
 import com.naofi.model.dao.interfaces.TechnologyDAO;
 import com.naofi.model.entity.Technology;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
@@ -17,9 +18,13 @@ public class TechnologyJdbcDAO extends AbstractDAO implements TechnologyDAO {
 
     @Override
     public Technology getById(int id) {
-        return template.queryForObject("select * from technologies where id = :id",
-                new MapSqlParameterSource().addValue("id", id),
-                new BeanPropertyRowMapper<>(Technology.class));
+        try {
+            return template.queryForObject("select * from technologies where id = :id",
+                    new MapSqlParameterSource().addValue("id", id),
+                    new BeanPropertyRowMapper<>(Technology.class));
+        } catch (EmptyResultDataAccessException e) {
+            return null;
+        }
     }
 
     @Override
@@ -37,7 +42,7 @@ public class TechnologyJdbcDAO extends AbstractDAO implements TechnologyDAO {
 
     @Override
     public List<Technology> getByProgrammerId(int programmerId) {
-        return template.query("select * from technoloies where id in" +
+        return template.query("select * from technologies where id in " +
                         "(select technology_id from programmers_technologies where programmer_id = :programmer_id)",
                 new MapSqlParameterSource().addValue("programmer_id", programmerId),
                 new BeanPropertyRowMapper<>(Technology.class));
@@ -45,8 +50,8 @@ public class TechnologyJdbcDAO extends AbstractDAO implements TechnologyDAO {
 
     @Override
     public List<Technology> getByProjectId(int projectId) {
-        return template.query("select * from technologies where id in" +
-                        "(select * from projects_technologies where project_id = :project_id)",
+        return template.query("select * from technologies where id in " +
+                        "(select technology_id from projects_technologies where project_id = :project_id)",
                 new MapSqlParameterSource().addValue("project_id", projectId),
                 new BeanPropertyRowMapper<>(Technology.class));
     }
@@ -64,5 +69,13 @@ public class TechnologyJdbcDAO extends AbstractDAO implements TechnologyDAO {
                 new MapSqlParameterSource()
                         .addValue("name", technology.getName())
                         .addValue("id", technology.getId()));
+    }
+
+    @Override
+    public void populate(int count) {
+        template.update("insert into technologies (name) " +
+                        "(select substring(md5(random()::text) from 1 for (random() * 5 + 5)::int) " +
+                        "from generate_series(1, :count) g)",
+                new MapSqlParameterSource().addValue("count", count));
     }
 }

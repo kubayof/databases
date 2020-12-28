@@ -12,11 +12,11 @@
             <form action="/programmers_technologies/new" method="POST">
                 <div class="form-group">
                     <label for="${gen.newId("programmer_id")}">Programmer Id</label>
-                    <input type="number" class="form-control" id="${gen.getId("programmer_id")}" name="programmer_id" value="1" min="1">
+                    <input type="number" class="form-control" id="${gen.getId("programmer_id")}" name="programmerId" value="1" min="1">
                 </div>
                 <div class="form-group">
                     <label for="${gen.newId("technology_id")}">Technology Id</label>
-                    <input type="number" class="form-control" id="${gen.getId("technology_id")}" name="technology_id" value="1" min="1">
+                    <input type="number" class="form-control" id="${gen.getId("technology_id")}" name="technologyId" value="1" min="1">
                 </div>
                 <button type="submit" class="btn btn-primary">Insert</button>
             </form>

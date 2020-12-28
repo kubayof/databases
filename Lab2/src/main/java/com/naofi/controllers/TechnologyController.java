@@ -2,12 +2,12 @@ package com.naofi.controllers;
 
 import com.naofi.model.dao.interfaces.TechnologyDAO;
 import com.naofi.model.entity.Technology;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 
-import java.util.List;
-
-@RestController
+@Controller
 @RequestMapping("/technologies")
 public class TechnologyController {
     private final TechnologyDAO dao;
@@ -17,26 +17,38 @@ public class TechnologyController {
     }
 
     @GetMapping("/id")
+    @ResponseBody
     public Technology getById(@RequestParam Integer id) {
-        return dao.getById(id);
+        Technology technology = dao.getById(id);
+        if (technology == null) {
+            throw new NullPointerException();
+        }
+        return technology;
     }
 
     @GetMapping("/name")
-    public List<Technology> getByName(@RequestParam String name) {
-        return dao.getByName(name);
+    public String getByName(@RequestParam String name, Model model) {
+        model.addAttribute("items", dao.getByName(name));
+
+        return "list_info";
     }
 
     @GetMapping("/programmer_id")
-    public List<Technology> getByProgrammerId(@RequestParam("programmer_id") Integer programmerId) {
-        return dao.getByProgrammerId(programmerId);
+    public String getByProgrammerId(@RequestParam("programmer_id") Integer programmerId, Model model) {
+        model.addAttribute("items", dao.getByProgrammerId(programmerId));
+
+        return "list_info";
     }
 
     @GetMapping("/project_id")
-    public List<Technology> getByProjectId(@RequestParam("project_id") Integer projectId) {
-        return dao.getByProjectId(projectId);
+    public String getByProjectId(@RequestParam("project_id") Integer projectId, Model model) {
+        model.addAttribute("items", dao.getByProjectId(projectId));
+
+        return "list_info";
     }
 
     @PostMapping("/new")
+    @ResponseBody
     public String createNew(Technology technology) {
         if (dao.save(technology) > 0) {
             return "Inserted successfully";
@@ -46,6 +58,7 @@ public class TechnologyController {
     }
 
     @PostMapping("/update")
+    @ResponseBody
     public String update(Technology technology) {
         if (dao.update(technology) > 0) {
             return "Updated successfully";
@@ -54,7 +67,8 @@ public class TechnologyController {
         }
     }
 
-    @DeleteMapping("/delete")
+    @PostMapping("/delete")
+    @ResponseBody
     public String delete(@RequestParam("id") Integer id) {
         if (dao.deleteById(id) > 0) {
             return "Successfully deleted";

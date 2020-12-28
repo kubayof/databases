@@ -12,7 +12,7 @@
             <form action="/managers/project_id" method="GET">
                 <div class="form-group">
                     <label for="${gen.newId("id")}">Projectr Id</label>
-                    <input type="number" class="form-control" id="${gen.getId("id")}" name="id" value="1" min="1">
+                    <input type="number" class="form-control" id="${gen.getId("id")}" name="project_id" value="1" min="1">
                 </div>
                 <button type="submit" class="btn btn-primary">Get</button>
             </form>
