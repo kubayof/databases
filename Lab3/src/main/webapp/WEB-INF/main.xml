@@ -19,16 +19,17 @@
           c:prefix="/jsp/"
           c:suffix=".jsp"/>
 
+
     <bean name="gen" class="com.naofi.util.IdGenerator" scope="request"/>
 
     <!-- Use aop to begin and stop transaction for controller methods -->
-<!--    <bean id="transactionalBean" class="com.naofi.controllers.aop.TransactionAspectBean"/>-->
-<!--    <aop:config>-->
-<!--        <aop:aspect id="transactionAspect" ref="transactionalBean">-->
-<!--            <aop:pointcut id="transactional" expression="execution(* com.naofi.controllers.*Controller.*(..))"/>-->
-<!--            <aop:before method="beginTransaction" pointcut-ref="transactional"/>-->
-<!--            <aop:after-returning method="commit" pointcut-ref="transactional"/>-->
-<!--            <aop:after-throwing method="rollback" pointcut-ref="transactional"/>-->
-<!--        </aop:aspect>-->
-<!--    </aop:config>-->
+    <bean id="transactionalBean" class="com.naofi.controllers.aop.TransactionAspectBean"/>
+    <aop:config>
+        <aop:aspect id="transactionAspect" ref="transactionalBean">
+            <aop:pointcut id="transactional" expression="execution(* com.naofi.controllers.*EntityController.*(..))"/>
+            <aop:before method="beginTransaction" pointcut-ref="transactional"/>
+            <aop:after-returning method="commit" pointcut-ref="transactional"/>
+            <aop:after-throwing method="rollback" pointcut-ref="transactional"/>
+        </aop:aspect>
+    </aop:config>
 </beans>

@@ -3,19 +3,15 @@ package com.naofi.model;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
-import org.springframework.stereotype.Component;
-import org.springframework.web.context.annotation.RequestScope;
 
 import javax.sql.DataSource;
 import java.util.stream.Stream;
 
-@Component("generator")
-@RequestScope
 public class DataGenerator {
     private final NamedParameterJdbcTemplate template;
 
-    public DataGenerator(DataSource ds) {
-        template = new NamedParameterJdbcTemplate(ds);
+    public DataGenerator(DataSource postgreDS) {
+        template = new NamedParameterJdbcTemplate(postgreDS);
     }
 
     public void populate(int managersCount,

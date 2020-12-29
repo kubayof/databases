@@ -1,5 +1,6 @@
 package com.naofi.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
@@ -26,7 +27,11 @@ public class Project {
 
     @OneToOne
     @JoinColumn(name = "manager")
+    @JsonIgnore
+    @ToString.Exclude
     private Manager manager;
     @ManyToMany
+    @JsonIgnore
+    @ToString.Exclude
     private List<Technology> technologies;
 }
