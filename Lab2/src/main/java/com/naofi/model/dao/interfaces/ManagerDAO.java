@@ -15,6 +15,7 @@ public interface ManagerDAO extends DAO {
     List<Manager> getByLastName(String lastName);
     Manager getByProjectId(int projectId);
     Manager getByProgrammerId(int programmerId);
+    List<Manager> getBy(Manager manager);
 
     int save(Manager manager);
     int update(Manager manager);

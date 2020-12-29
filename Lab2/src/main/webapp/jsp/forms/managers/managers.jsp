@@ -17,6 +17,7 @@
                 <jsp:include page="/jsp/forms/managers/get_by_last_name.jsp"/>
                 <jsp:include page="/jsp/forms/managers/get_by_programmer_id.jsp"/>
                 <jsp:include page="/jsp/forms/managers/get_by_project_id.jsp"/>
+                <jsp:include page="/jsp/forms/managers/get_by.jsp"/>
                 <jsp:include page="/jsp/forms/managers/create_new.jsp"/>
                 <jsp:include page="/jsp/forms/managers/update.jsp"/>
                 <jsp:include page="/jsp/forms/managers/delete.jsp"/>

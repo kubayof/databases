@@ -43,6 +43,13 @@ public class ManagerController {
         return "list_info";
     }
 
+    @GetMapping("/get_by")
+    public String getBy(Manager manager, Model model) {
+        model.addAttribute("items", dao.getBy(manager));
+
+        return "list_info";
+    }
+
     @GetMapping("/project_id")
     @ResponseBody
     public Manager getByProjectId(@RequestParam("project_id") Integer projectId) {

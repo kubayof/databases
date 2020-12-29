@@ -13,27 +13,27 @@
             <form action="/populate" method="POST">
                 <div class="form-group">
                     <label for="${gen.newId("id")}">Managers count</label>
-                    <input type="number" class="form-control" id="${gen.getId("id")}" name="managers_count" value="1" min="1">
+                    <input type="number" class="form-control" id="${gen.getId("id")}" name="managers_count" value="1" min="0">
                 </div>
                 <div class="form-group">
                     <label for="${gen.newId("id")}">Programmers count</label>
-                    <input type="number" class="form-control" id="${gen.getId("id")}" name="programmers_count" value="1" min="1">
+                    <input type="number" class="form-control" id="${gen.getId("id")}" name="programmers_count" value="1" min="0">
                 </div>
                 <div class="form-group">
                     <label for="${gen.newId("id")}">Projects count</label>
-                    <input type="number" class="form-control" id="${gen.getId("id")}" name="projects_count" value="1" min="1">
+                    <input type="number" class="form-control" id="${gen.getId("id")}" name="projects_count" value="1" min="0">
                 </div>
                 <div class="form-group">
                     <label for="${gen.newId("id")}">Technologies count</label>
-                    <input type="number" class="form-control" id="${gen.getId("id")}" name="technologies_count" value="1" min="1">
+                    <input type="number" class="form-control" id="${gen.getId("id")}" name="technologies_count" value="1" min="0">
                 </div>
                 <div class="form-group">
                     <label for="${gen.newId("id")}">ProgrammersTechnologies count</label>
-                    <input type="number" class="form-control" id="${gen.getId("id")}" name="programmers_technologies_count" value="1" min="1">
+                    <input type="number" class="form-control" id="${gen.getId("id")}" name="programmers_technologies_count" value="1" min="0">
                 </div>
                 <div class="form-group">
                     <label for="${gen.newId("id")}">ProjectsTechnologies count</label>
-                    <input type="number" class="form-control" id="${gen.getId("id")}" name="projects_technologies_count" value="1" min="1">
+                    <input type="number" class="form-control" id="${gen.getId("id")}" name="projects_technologies_count" value="1" min="0">
                 </div>
                 <button type="submit" class="btn btn-primary">Populate</button>
             </form>
