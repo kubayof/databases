@@ -3,7 +3,7 @@ DROP TABLE IF EXISTS programmers_technologies;
 DROP TABLE IF EXISTS projects;
 DROP TABLE IF EXISTS programmers;
 DROP TABLE IF EXISTS technologies;
-DROP TABLE IF EXISTS managers;
+DROP TABLE IF EXISTS managers CASCADE;
 
 CREATE TABLE managers
 (
